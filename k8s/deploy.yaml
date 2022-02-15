@@ -1,0 +1,34 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webnode
+spec:
+  selector:
+    matchLabels:
+      app: webnode
+  template:
+    metadata:
+      labels:
+        app: webnode
+    spec:
+      containers:
+      - name: webnode
+        image: rampss/node-project:v1
+        ports: 
+        - containerPort: 8080
+
+---
+# Service Web
+apiVersion: v1
+kind: Service
+metadata:
+  name: webnode
+spec:
+  selector:
+    app: webnode
+  ports:
+   - port: 80
+     targetPort: 8080
+     nodePort: 30000
+  type: NodePort
